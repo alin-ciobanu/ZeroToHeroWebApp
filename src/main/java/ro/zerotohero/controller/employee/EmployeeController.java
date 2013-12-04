@@ -34,10 +34,10 @@ public class EmployeeController {
 		employee3.setEmail("emp3@mail.ro");
 		employee3.setPassword("password");
 
-		ArrayList<EmployeeEntity> listaEmployee = new ArrayList<EmployeeEntity>();
-		listaEmployee.add(employee1);
-		listaEmployee.add(employee2);
-		listaEmployee.add(employee3);
+		ArrayList<EmployeeEntity> employeeList = new ArrayList<EmployeeEntity>();
+		employeeList.add(employee1);
+		employeeList.add(employee2);
+		employeeList.add(employee3);
 
 		model.addAttribute("message", "Employee Index");
 		return "employee/index";

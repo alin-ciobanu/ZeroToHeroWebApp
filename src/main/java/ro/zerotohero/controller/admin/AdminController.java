@@ -34,12 +34,13 @@ public class AdminController {
 		admin3.setEmail("gg@mail.ro");
 		admin3.setPassword("password");
 
-		ArrayList<AdminEntity> listaAdmin = new ArrayList<AdminEntity>();
-		listaAdmin.add(admin1);
-		listaAdmin.add(admin2);
-		listaAdmin.add(admin3);
+		ArrayList<AdminEntity> adminList = new ArrayList<AdminEntity>();
+		adminList.add(admin1);
+		adminList.add(admin2);
+		adminList.add(admin3);
 
 		model.addAttribute("message", "Admin Index");
+		model.addAttribute("adminList", adminList);
 		return "admin/index";
 	}
 
