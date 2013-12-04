@@ -39,7 +39,7 @@ public class EmployeeController {
 		listaEmployee.add(employee2);
 		listaEmployee.add(employee3);
 
-		model.addAttribute("message", "Application Index");
+		model.addAttribute("message", "Employee Index");
 		return "employee/index";
 	}
 

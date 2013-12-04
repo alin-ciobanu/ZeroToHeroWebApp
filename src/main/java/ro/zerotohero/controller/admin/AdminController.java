@@ -39,7 +39,7 @@ public class AdminController {
 		listaAdmin.add(admin2);
 		listaAdmin.add(admin3);
 
-		model.addAttribute("message", "Application Index");
+		model.addAttribute("message", "Admin Index");
 		return "admin/index";
 	}
 
