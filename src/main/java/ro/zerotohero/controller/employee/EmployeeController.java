@@ -25,7 +25,7 @@ public class EmployeeController {
 		EmployeeEntity employee2 = new EmployeeEntity();
 		employee2.setFirstName("Emp2_F");
 		employee2.setLastName("Emp2_L");
-		employee2.setEmail("emp3@mail.ro");
+		employee2.setEmail("emp2@mail.ro");
 		employee2.setPassword("password");
 
 		EmployeeEntity employee3 = new EmployeeEntity();
@@ -40,6 +40,7 @@ public class EmployeeController {
 		employeeList.add(employee3);
 
 		model.addAttribute("message", "Employee Index");
+		model.addAttribute("employeeList", employeeList);
 		return "employee/index";
 	}
 
