@@ -1,12 +1,16 @@
 package ro.zerotohero.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +22,7 @@ public class Role implements Serializable {
 	private int roleId;
 	private String name;
 	private String authority;
+	private List<Employee> employeeList = new ArrayList<Employee>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,6 +51,15 @@ public class Role implements Serializable {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+
+	@ManyToMany(mappedBy = "roleList", fetch = FetchType.EAGER)
+	public List<Employee> getEmployeeList() {
+		return employeeList;
+	}
+
+	public void setEmployeeList(List<Employee> employeeList) {
+		this.employeeList = employeeList;
 	}
 
 }

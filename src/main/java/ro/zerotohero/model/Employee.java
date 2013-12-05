@@ -1,12 +1,19 @@
 package ro.zerotohero.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +27,7 @@ public class Employee implements Serializable {
 	private String lastName;
 	private String email;
 	private String password;
+	private List<Role> roleList = new ArrayList<Role>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -66,6 +74,16 @@ public class Employee implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@JoinTable(name = "EMPLOYEE_ROLE", joinColumns = { @JoinColumn(name = "EMPLOYEE_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
 
 }
