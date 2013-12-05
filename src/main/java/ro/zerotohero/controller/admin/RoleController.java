@@ -24,8 +24,7 @@ public class RoleController {
 	private EmployeeService employeeService;
 	@Autowired
 	private RoleService roleService;
-	
-	
+
 	@RequestMapping(value = "/listRole", method = RequestMethod.GET)
 	public String listRole(ModelMap model) {
 		List<Role> roleList = roleService.findAll();
@@ -48,15 +47,14 @@ public class RoleController {
 		Role role = new Role();
 		String name = request.getParameter("name");
 		String authority = request.getParameter("authority");
-		
-		
+
 		role.setAuthority(authority);
 		role.setName(name);
 		String roleId = request.getParameter("roleId");
-		
+
 		if ((roleId == "") || (roleId == null)) {
 			role.setRoleId(0);
-		}else{
+		} else {
 			role.setRoleId(Integer.valueOf(roleId));
 		}
 		roleService.save(role);
@@ -74,8 +72,5 @@ public class RoleController {
 
 		return "admin/newRole";
 	}
-	
-	
-	
 
 }

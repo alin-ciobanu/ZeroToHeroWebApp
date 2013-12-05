@@ -1,47 +1,31 @@
 package ro.zerotohero.controller.employee;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ro.zerotohero.model.Employee;
+import ro.zerotohero.service.EmployeeService;
+import ro.zerotohero.service.RoleService;
 
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String index(ModelMap model) {
+	@Autowired
+	private EmployeeService employeeService;
+	@Autowired
+	private RoleService roleService;
 
-		Employee employee1 = new Employee();
-		employee1.setFirstName("Emp1_F");
-		employee1.setLastName("Emp1_L");
-		employee1.setEmail("emp1@mail.ro");
-		employee1.setPassword("password");
-
-		Employee employee2 = new Employee();
-		employee2.setFirstName("Emp2_F");
-		employee2.setLastName("Emp2_L");
-		employee2.setEmail("emp2@mail.ro");
-		employee2.setPassword("password");
-
-		Employee employee3 = new Employee();
-		employee3.setFirstName("Emp3_F");
-		employee3.setLastName("Emp3_L");
-		employee3.setEmail("emp3@mail.ro");
-		employee3.setPassword("password");
-
-		ArrayList<Employee> employeeList = new ArrayList<Employee>();
-		employeeList.add(employee1);
-		employeeList.add(employee2);
-		employeeList.add(employee3);
-
-		model.addAttribute("message", "Employee Index");
+	@RequestMapping(value = "/listEmployee", method = RequestMethod.GET)
+	public String listEmployee(ModelMap model) {
+		List<Employee> employeeList = employeeService.findAll();
 		model.addAttribute("employeeList", employeeList);
-		return "employee/index";
+		return "employee/listEmployee";
 	}
 
 }
