@@ -28,18 +28,32 @@
 		</div>
 	</div>
 
-	<div class="container">
-		<div class="starter-template">
-			<h1>Bine ai venit, Admin!</h1>
-			<p class="lead">
-				Foloseste link-urile de sus pentru a naviga in aplicatie<br>
-
-			</p>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<fieldset>
+				<legend>Adaugare rol</legend>
+				<form class="form-horizontal" method="post" action="<c:url value="/admin/saveRole/" />" name="roleForm" id="roleForm">
+					<div class="control-group">
+						<label class="control-label">Nume</label>
+						<div class="controls">
+							<input type="text" name="name" id="name" title="name" value="${role.name}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Tip rol</label>
+						<div class="controls">
+							<input type="text" name="authority" id="authority" title="authority" value="${role.authority}">
+						</div>
+					</div>
+					<input type="hidden" name="roleId" id="roleId" title="roleId" value="${role.roleId}">
+					<div class="form-actions">
+						<button type="submit" class="btn btn-success">Salveaza</button>
+					</div>
+				</form>
+				</fieldset>
+			</div>
 		</div>
-	</div>
-	<!-- /.container -->
-
-	<jsp:include page="includes/admin-scripts.jsp" />
-
+	</div>		
 </body>
 </html>
