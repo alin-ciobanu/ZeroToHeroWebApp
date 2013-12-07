@@ -12,7 +12,6 @@ import ro.zerotohero.model.Employee;
 
 @Repository
 public class EmployeeDao {
-
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -28,32 +27,35 @@ public class EmployeeDao {
 	@Transactional
 	public Employee findById(int employeeId) {
 		Session session = sessionFactory.getCurrentSession();
-		Employee employee = (Employee) session
-				.createQuery("from Employee where EmployeeId = :id")
-				.setParameter("id", employeeId).uniqueResult();
+		Employee employee = (Employee) session.createQuery(
+				"from Employee where employeeId = :id").setParameter("id",
+				employeeId).uniqueResult();
+		
 		return employee;
 	}
 
 	@Transactional
 	public void save(Employee employee) {
 		Session session = sessionFactory.getCurrentSession();
-		Employee dbEmployee = findById(employee.getEmployeeId());
-		if (dbEmployee != null) {
-			dbEmployee.setLastName(employee.getLastName());
-			dbEmployee.setFirstName(employee.getFirstName());
+		Employee dbEmployee = findById(employee.getEmployeeId()); 
+		if ( dbEmployee != null){
 			dbEmployee.setEmail(employee.getEmail());
+			dbEmployee.setFirstName(employee.getFirstName());
+			dbEmployee.setLastName(employee.getLastName());
 			dbEmployee.setPassword(employee.getPassword());
 			session.update(dbEmployee);
-		} else {
-			session.save(employee);
+		}else{
+			session.saveOrUpdate(employee);
 		}
+		
 	}
-
+	
 	@Transactional
-	public void delete(Employee Employee) {
+	public void delete(Employee employee) {
 		Session session = sessionFactory.getCurrentSession();
-		Employee dbEmployee = findById(Employee.getEmployeeId());
+		Employee dbEmployee = findById(employee.getEmployeeId()); 
 		session.delete(dbEmployee);
+		
 	}
 
 }

@@ -9,31 +9,27 @@ import org.springframework.transaction.annotation.Transactional;
 import ro.zerotohero.dao.EmployeeDao;
 import ro.zerotohero.model.Employee;
 
-@Service
-@Transactional
+@Service  
+@Transactional 
 public class EmployeeService {
-
 	@Autowired
 	private EmployeeDao employeeDao;
 
 	@Transactional
 	public List<Employee> findAll() {
-		return employeeDao.findAll();
+		return employeeDao.findAll(); 
 	}
-
+	
 	@Transactional
 	public void save(Employee employee) {
-		employeeDao.save(employee);
+		employeeDao.save(employee);		
 	}
-
+	
 	@Transactional
 	public Employee findById(int employeeId) {
 		return employeeDao.findById(employeeId);
 	}
-
-	@Transactional
 	public void delete(Employee employee) {
 		employeeDao.delete(employee);
 	}
-
 }

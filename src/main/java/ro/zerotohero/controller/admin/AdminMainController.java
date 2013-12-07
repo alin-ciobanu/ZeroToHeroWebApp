@@ -17,23 +17,22 @@ import ro.zerotohero.model.Role;
 import ro.zerotohero.service.EmployeeService;
 import ro.zerotohero.service.RoleService;
 
-
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminMainController {
 
 	@Autowired
 	private EmployeeService employeeService;
-
 	@Autowired
 	private RoleService roleService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(ModelMap model) {
-		model.addAttribute("message", "Application Index Admin");
+		model.addAttribute("message", "Admin Index");
 		return "admin/index";
 	}
 
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(ModelMap model) {
 		List<Employee> employeeList = employeeService.findAll();
@@ -45,8 +44,10 @@ public class AdminController {
 	public String newEmployee(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response) {
 
+		List<Role> roleList = roleService.findAll();
+		model.addAttribute("roleList", roleList);
 		model.addAttribute("employee", new Employee());
-		return "admin/newRole";
+		return "admin/new";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -58,24 +59,23 @@ public class AdminController {
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String roleId = request.getParameter("roleId");
 		String employeeId = request.getParameter("employeeId");
-
+		String roleId = request.getParameter("roleId");
+		
+		employee.setEmail(email);
 		employee.setFirstName(firstName);
-		employee.setFirstName(lastName);
-		employee.setFirstName(email);
+		employee.setLastName(lastName);
 		employee.setPassword(password);
-
 		if ((employeeId.equals("")) || (employeeId == null)) {
 			employee.setEmployeeId(0);
 		}else{
 			employee.setEmployeeId(Integer.valueOf(employeeId));
 		}
-
-		if (roleId.equals("") || roleId==null){
+		
+		if ((roleId.equals("")) || (roleId == null)) {
 			roleId = employee.getRoleList().get(0).getRoleId()+"";
 		}
-
+		
 		Role role = roleService.findById(Integer.valueOf(roleId));
 		employee.getRoleList().add(role);
 		role.getEmployeeList().add(employee);
@@ -90,21 +90,25 @@ public class AdminController {
 	public String edit(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("id") int id) {
 
-		model.addAttribute("employee", employeeService.findById(id));
+		Employee employee = employeeService.findById(id);
+		List<Role> roleList = employee.getRoleList();
+		model.addAttribute("roleList", roleList);
+		model.addAttribute("employee", employee);
+		model.addAttribute("isEdit", true);
 
 		return "admin/new";
 	}
-
+	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String delete(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("id") int id) {
 
 		employeeService.delete(employeeService.findById(id));
+		
 		List<Employee> employeeList = employeeService.findAll();
 		model.addAttribute("employeeList", employeeList);
-
 		return "redirect:/admin/list";
 	}
-
+	
 
 }

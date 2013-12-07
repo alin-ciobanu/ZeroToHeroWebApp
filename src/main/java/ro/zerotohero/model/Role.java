@@ -19,14 +19,23 @@ import javax.persistence.Table;
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private int roleId;
 	private String name;
 	private String authority;
 	private List<Employee> employeeList = new ArrayList<Employee>();
+	
+	@ManyToMany(mappedBy="roleList", fetch=FetchType.EAGER)
+    public List<Employee> getEmployeeList() {
+		return employeeList;
+	}
+
+	public void setEmployeeList(List<Employee> employeeList) {
+		this.employeeList = employeeList;
+	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ROLE_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="ROLE_SEQ"  )
 	@SequenceGenerator(name = "ROLE_SEQ", sequenceName = "ROLE_SEQ", allocationSize = 1)
 	@Column(name = "ROLE_ID", unique = true, nullable = false)
 	public int getRoleId() {
@@ -55,13 +64,4 @@ public class Role implements Serializable {
 		this.authority = authority;
 	}
 
-	@ManyToMany(mappedBy = "roleList", fetch = FetchType.EAGER)
-	public List<Employee> getEmployeeList() {
-		return employeeList;
 	}
-
-	public void setEmployeeList(List<Employee> employeeList) {
-		this.employeeList = employeeList;
-	}
-
-}

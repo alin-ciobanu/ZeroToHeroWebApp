@@ -30,8 +30,20 @@ public class Employee implements Serializable {
 	private String password;
 	private List<Role> roleList = new ArrayList<Role>();
 
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@JoinTable(name = "EMPLOYEE_ROLE", 
+	joinColumns = { @JoinColumn(name = "EMPLOYEE_ID") },
+	inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLOYEE_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="EMPLOYEE_SEQ"  )
 	@SequenceGenerator(name = "EMPLOYEE_SEQ", sequenceName = "EMPLOYEE_SEQ", allocationSize = 1)
 	@Column(name = "EMPLOYEE_ID", unique = true, nullable = false)
 	public int getEmployeeId() {
@@ -40,6 +52,15 @@ public class Employee implements Serializable {
 
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
+	}
+
+	@Column(name = "PASSWORD", unique = false, nullable = false)
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Column(name = "FIRST_NAME", unique = false, nullable = false)
@@ -67,25 +88,6 @@ public class Employee implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	@Column(name = "PASSWORD", unique = false, nullable = false)
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
-	@JoinTable(name = "EMPLOYEE_ROLE", joinColumns = { @JoinColumn(name = "EMPLOYEE_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
 	}
 
 }

@@ -36,9 +36,9 @@
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@10.6.135.66:1521/HERO"/>
-		<property name="username" value="Java1Weblogic" />
-		<property name="password" value="Java1Weblogic" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521/ALINDB"/>
+		<property name="username" value="yozmo" />
+		<property name="password" value="jovial" />
 	</bean>
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ro.zerotohero.model.Role;
+import ro.zerotohero.service.EmployeeService;
 import ro.zerotohero.service.RoleService;
 
 @Controller
@@ -20,8 +21,11 @@ import ro.zerotohero.service.RoleService;
 public class RoleController {
 
 	@Autowired
+	private EmployeeService employeeService;
+	@Autowired
 	private RoleService roleService;
-
+	
+	
 	@RequestMapping(value = "/listRole", method = RequestMethod.GET)
 	public String listRole(ModelMap model) {
 		List<Role> roleList = roleService.findAll();
@@ -44,16 +48,15 @@ public class RoleController {
 		Role role = new Role();
 		String name = request.getParameter("name");
 		String authority = request.getParameter("authority");
-
-
+		
+		
 		role.setAuthority(authority);
 		role.setName(name);
 		String roleId = request.getParameter("roleId");
-
+		
 		if ((roleId.equals("")) || (roleId == null)) {
 			role.setRoleId(0);
-		}
-		else {
+		}else{
 			role.setRoleId(Integer.valueOf(roleId));
 		}
 		roleService.save(role);
@@ -71,17 +74,17 @@ public class RoleController {
 
 		return "admin/newRole";
 	}
-
+	
 	@RequestMapping(value = "/deleteRole/{id}", method = RequestMethod.GET)
 	public String delete(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("id") int id) {
 
 		roleService.delete(roleService.findById(id));
-		List<Role > roleList = roleService.findAll();
-		model.addAttribute("employeeList", roleList);
-
+		
+		List<Role> roleList = roleService.findAll();
+		model.addAttribute("roleList", roleList);
 		return "redirect:/admin/listRole";
 	}
-
+	
 
 }
